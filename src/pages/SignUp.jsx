@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button, Label, TextInput } from "flowbite-react";
+import { Button, Label, TextInput, Alert, Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
-// import Otp from "../components/Otp";
+import Otp from "../components/Otp";
 
 const SignUp = () => {
   const [fullName, setFullName] = useState("");
@@ -9,30 +9,62 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
-
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
+  const [isOtpDialogOpen, setIsOtpDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!fullName || !username || !email || !password) {
+      return setErrorMessage("Please fill out all fields.");
+    }
+    const passwordPattern = /^(?=.*[@])(?=.*[!]).{5,}$/;
+    if (!passwordPattern.test(password)) {
+      return setErrorMessage(
+        "Password must contain '@', '!', and be at least 5 characters long."
+      );
+    }
+    const formData = new FormData();
+    formData.append("fullName", fullName);
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("profile", profilePicture);
 
-    const formData = {
-      fullName,
-      username,
-      email,
-      password,
-      profile: profilePicture,
-    };
+    try {
+      setErrorMessage(null);
+      setLoading(true);
+      const res = await fetch("http://localhost:8080/api/auth", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        return setErrorMessage(data.message);
+      }
+      if (res.ok) {
+        console.log(
+          "User registered successfully. Please check your email for OTP."
+        );
+        setIsOtpDialogOpen(true);
+      } else {
+        console.error("Registration failed.");
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      setLoading(false);
+    }
 
-    const res = await fetch("http://localhost:8080/api/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-    console.log("LoginData:", formData);
-
-    // localStorage.setItem("formData", JSON.stringify(formData));
-    // alert("Data saved to localstorage");
+    // try {
+    //   setLoading(true);
+    //   localStorage.setItem("formData", JSON.stringify(formData));
+    //   console.log(formData);
+    //   setIsOtpDialogOpen(true);
+    //   setLoading(false);
+    // } catch (error) {
+    //   setErrorMessage(error.message);
+    // }
   };
 
   const handleProfilePictureChange = (e) => {
@@ -127,8 +159,19 @@ const SignUp = () => {
               )}
             </div>
 
-            <Button gradientDuoTone="purpleToBlue" type="submit">
-              Sign Up
+            <Button
+              gradientDuoTone="purpleToBlue"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Spinner size="sm" />
+                  <span className="pl-3">Loading...</span>
+                </>
+              ) : (
+                "Sign Up"
+              )}
             </Button>
           </form>
           <div className="flex gap-2 text-sm mt-5">
@@ -137,9 +180,14 @@ const SignUp = () => {
               Sign In
             </Link>
           </div>
+          {errorMessage && (
+            <Alert className="mt-5" color="failure">
+              {errorMessage}
+            </Alert>
+          )}
         </div>
-      </div>
-      {/* <Otp /> */}
+      </div>{" "}
+      {isOtpDialogOpen && <Otp email={email} />}
     </div>
   );
 };

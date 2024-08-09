@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Otp = () => {
+const Otp = ({ email }) => {
+  const [otp, setOtp] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch(
+      `http://localhost:8080/api/auth/verify-otp?otp=${otp}&email=${email}`,
+      {
+        method: "POST",
+      }
+    );
+    if (res.ok) {
+      console.log("OTP verified successfully.");
+    } else {
+      console.error("OTP verification failed.");
+    }
+  };
   return (
     <div>
       <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
@@ -16,8 +33,13 @@ const Otp = () => {
             </div>
 
             <div>
-              <form action="" method="post">
-                <div className="flex flex-col space-y-16">
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="number"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+                {/* <div className="flex flex-col space-y-16">
                   <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs gap-2">
                     <div className="w-16 h-16 ">
                       <input
@@ -59,7 +81,10 @@ const Otp = () => {
 
                   <div className="flex flex-col space-y-5">
                     <div>
-                      <button className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm">
+                      <button
+                        type="submit"
+                        className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
+                      >
                         Verify Account
                       </button>
                     </div>
@@ -76,7 +101,7 @@ const Otp = () => {
                       </a>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>
