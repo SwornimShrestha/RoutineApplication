@@ -20,16 +20,13 @@ const SignIn = () => {
     try {
       setErrorMessage(null);
       setloading(true);
-
-      // localStorage.setItem("formData", JSON.stringify(formData));
-      // alert("Data saved to localstorage");
       const res = await fetch("http://localhost:8080/api/v1/auth/signIn", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json(); // Parse the response as JSON
+      const data = await res.json();
 
       setloading(false);
 

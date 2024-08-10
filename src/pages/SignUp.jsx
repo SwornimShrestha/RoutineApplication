@@ -13,7 +13,7 @@ const SignUp = () => {
   const [isOtpDialogOpen, setIsOtpDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!fullName || !username || !email || !password) {
@@ -55,16 +55,6 @@ const SignUp = () => {
     } catch (error) {
       setErrorMessage(error.message);
     }
-
-    // try {
-    //   setLoading(true);
-    //   localStorage.setItem("formData", JSON.stringify(formData));
-    //   console.log(formData);
-    //   setIsOtpDialogOpen(true);
-    //   setLoading(false);
-    // } catch (error) {
-    //   setErrorMessage(error.message);
-    // }
   };
 
   const handleProfilePictureChange = (e) => {
@@ -173,11 +163,6 @@ const SignUp = () => {
                 "Sign Up"
               )}
             </Button>
-            {/* <Button
-              onClick={() => setIsOtpDialogOpen((prevState) => !prevState)}
-            >
-              <Otp />
-            </Button> */}
           </form>
           <div className="flex gap-2 text-sm mt-5">
             <span>Have an account?</span>
