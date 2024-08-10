@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Label, TextInput, Alert, Spinner } from "flowbite-react";
+import { Button, Label, TextInput, Alert, Spinner, Modal } from "flowbite-react";
 import { Link } from "react-router-dom";
 import Otp from "../components/Otp";
 
@@ -35,7 +35,7 @@ const SignUp = () => {
     try {
       setErrorMessage(null);
       setLoading(true);
-      const res = await fetch("http://localhost:8080/api/auth", {
+      const res = await fetch("http://localhost:8080/api/v1/auth/signUp", {
         method: "POST",
         body: formData,
       });
@@ -47,13 +47,13 @@ const SignUp = () => {
         console.log(
           "User registered successfully. Please check your email for OTP."
         );
-        setIsOtpDialogOpen(true);
+        // setIsOtpDialogOpen(true);
+        setLoading(false);
       } else {
         console.error("Registration failed.");
       }
     } catch (error) {
       setErrorMessage(error.message);
-      setLoading(false);
     }
 
     // try {
@@ -173,6 +173,11 @@ const SignUp = () => {
                 "Sign Up"
               )}
             </Button>
+            <Button
+              onClick={() => setIsOtpDialogOpen((prevState) => !prevState)}
+            >
+              OTP
+            </Button>
           </form>
           <div className="flex gap-2 text-sm mt-5">
             <span>Have an account?</span>
@@ -187,6 +192,7 @@ const SignUp = () => {
           )}
         </div>
       </div>{" "}
+      
       {isOtpDialogOpen && <Otp email={email} />}
     </div>
   );

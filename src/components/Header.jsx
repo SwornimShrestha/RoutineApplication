@@ -18,7 +18,7 @@ const Header = () => {
           </span>
           Routine
         </Link>
-        <TextInput
+        {/* <TextInput
           type="text"
           placeholder="Search..."
           rightIcon={AiOutlineSearch}
@@ -27,7 +27,7 @@ const Header = () => {
 
         <Button className="w-12 h-10 lg:hidden" color="gray" pill>
           <AiOutlineSearch />
-        </Button>
+        </Button> */}
         <div className="flex gap-2 md:order-2">
           <Button className="w-12 h-10 hidden sm:inline " color="gray" pill>
             <FaMoon />
