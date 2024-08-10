@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, Label, TextInput, Alert, Spinner, Modal } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Button, Label, TextInput, Alert, Spinner } from "flowbite-react";
+import { Link, useNavigate } from "react-router-dom";
 import Otp from "../components/Otp";
 
 const SignUp = () => {
@@ -13,7 +13,7 @@ const SignUp = () => {
   const [isOtpDialogOpen, setIsOtpDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-
+ const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!fullName || !username || !email || !password) {
@@ -47,7 +47,7 @@ const SignUp = () => {
         console.log(
           "User registered successfully. Please check your email for OTP."
         );
-        // setIsOtpDialogOpen(true);
+        setIsOtpDialogOpen(true);
         setLoading(false);
       } else {
         console.error("Registration failed.");
@@ -173,11 +173,11 @@ const SignUp = () => {
                 "Sign Up"
               )}
             </Button>
-            <Button
+            {/* <Button
               onClick={() => setIsOtpDialogOpen((prevState) => !prevState)}
             >
-              OTP
-            </Button>
+              <Otp />
+            </Button> */}
           </form>
           <div className="flex gap-2 text-sm mt-5">
             <span>Have an account?</span>
@@ -192,8 +192,13 @@ const SignUp = () => {
           )}
         </div>
       </div>{" "}
-      
-      {isOtpDialogOpen && <Otp email={email} />}
+      {isOtpDialogOpen && (
+        <Otp
+          email={email}
+          isOpen={isOtpDialogOpen}
+          onClose={() => setIsOtpDialogOpen(false)}
+        />
+      )}
     </div>
   );
 };
