@@ -15,7 +15,6 @@ const Otp = ({ email, isOpen, onClose }) => {
     );
     if (res.ok) {
       console.log("OTP verified successfully.");
-      onClose();
 
       navigate("/sign-In");
     } else {

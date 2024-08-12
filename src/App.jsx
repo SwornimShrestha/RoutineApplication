@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Tasks from "./pages/Tasks";
+import TaskList from "./components/TaskList";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/tasks" element={<Tasks />} />
+          <Route path="/tasks-list" element={<TaskList />} />
         </Routes>
       </BrowserRouter>
     </>

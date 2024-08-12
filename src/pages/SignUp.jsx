@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Label, TextInput, Alert, Spinner } from "flowbite-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Otp from "../components/Otp";
 
 const SignUp = () => {
@@ -13,7 +13,7 @@ const SignUp = () => {
   const [isOtpDialogOpen, setIsOtpDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!fullName || !username || !email || !password) {
@@ -39,21 +39,28 @@ const SignUp = () => {
         method: "POST",
         body: formData,
       });
-      const data = await res.json();
-      if (data.success === false) {
-        return setErrorMessage(data.message);
-      }
+      // const data = await res.json();
+
+      // if (data.success === false) {
+      //   return setErrorMessage(data.message);
+      // }
+
       if (res.ok) {
         console.log(
           "User registered successfully. Please check your email for OTP."
         );
         setIsOtpDialogOpen(true);
         setLoading(false);
+        setFullName("");
+        setUserName("");
+        setPassword("");
+        setProfilePicture("");
+        setEmail("");
       } else {
         console.error("Registration failed.");
       }
     } catch (error) {
-      setErrorMessage(error.message);
+      // setErrorMessage(error.message);
     }
   };
 
