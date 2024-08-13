@@ -1,31 +1,32 @@
 "use client";
 import { Button, Label, Modal, TextInput, Select, Alert } from "flowbite-react";
 import React, { useState, useEffect } from "react";
-
+import { useSelector } from "react-redux";
 const Task = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    shift: "morning",
+    shift: "MORNING",
     startTime: "",
     endTime: "",
   });
+  const { currentUser } = useSelector((state) => state.user);
   const [error, setError] = useState(null);
   const [timeRange, setTimeRange] = useState({ min: "07:00", max: "10:00" });
 
   useEffect(() => {
     switch (formData.shift) {
-      case "morning":
+      case "MORNING":
         setTimeRange({ min: "07:00", max: "10:00" });
         break;
-      case "afternoon":
+      case "MIDDAY":
         setTimeRange({ min: "10:00", max: "14:00" });
         break;
-      case "evening":
+      case "AFTERNOON":
         setTimeRange({ min: "14:00", max: "19:00" });
         break;
-      case "night":
-        setTimeRange({ min: "19:00", max: "00:00" });
+      case "EVENING":
+        setTimeRange({ min: "19:00", max: "23:59" });
         break;
       default:
         setTimeRange({ min: "07:00", max: "10:00" });
@@ -44,7 +45,7 @@ const Task = ({ isOpen, onClose }) => {
       ...prevData,
       [id]: value,
     }));
-    setError(null); 
+    setError(null);
   };
 
   const validateForm = () => {
@@ -64,22 +65,50 @@ const Task = ({ isOpen, onClose }) => {
     return null;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationError = validateForm();
     if (validationError) {
       setError(validationError);
       return;
     }
-    console.log(formData);
-    onClose();
-    setFormData({
-      title: "",
-      description: "",
-      shift: "morning",
-      startTime: "",
-      endTime: "",
-    }); 
+    try {
+      const newData = {
+        title: formData.title,
+        description: formData.description,
+        startTime: formData.startTime,
+        endTime: formData.endTime,
+        shiftingTime: formData.shift,
+        userProfileId: currentUser.id,
+      };
+      const response = await fetch("http://localhost:8080/api/v1/routine", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(newData),
+      });
+
+      console.log(newData);
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Success:", data);
+        onClose();
+        setFormData({
+          title: "",
+          description: "",
+          shift: "MORNING",
+          startTime: "",
+          endTime: "",
+        });
+      } else {
+        setError("Failed to create routine. Please try again.");
+        console.error("Error:", response.statusText);
+      }
+    } catch (error) {
+      setError("An error occurred. Please try again.");
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -124,10 +153,10 @@ const Task = ({ isOpen, onClose }) => {
               value={formData.shift}
               onChange={handleChange}
             >
-              <option value="morning">Morning</option>
-              <option value="afternoon">Afternoon</option>
-              <option value="evening">Evening</option>
-              <option value="night">Night</option>
+              <option value="MORNING">Morning</option>
+              <option value="MIDDAY">Midday</option>
+              <option value="AFTERNOON">Afternoon</option>
+              <option value="EVENING">Evening</option>
             </Select>
           </div>
 

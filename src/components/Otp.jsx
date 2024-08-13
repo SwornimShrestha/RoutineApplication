@@ -1,9 +1,12 @@
 "use client";
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 import React, { useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+
 const Otp = ({ email, isOpen, onClose }) => {
   const [otp, setOtp] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -15,8 +18,7 @@ const Otp = ({ email, isOpen, onClose }) => {
     );
     if (res.ok) {
       console.log("OTP verified successfully.");
-
-      navigate("/sign-In");
+      navigate("/sign-in");
     } else {
       console.error("OTP verification failed.");
     }

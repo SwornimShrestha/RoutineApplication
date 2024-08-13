@@ -13,10 +13,10 @@ const Tasks = () => {
     <div>
       <div className=" px-10 md:px-20 mt-32  relative">
         {/* {left-side} */}
-        <div className=" w-full  flex flex-col gap-9 z-10 items-center">
-          <h1 className=" text-5xl md:text-6xl font-bold">
+        <div className=" w-full  flex flex-col gap-9 z-10 md:items-center">
+          <h1 className=" text-4xl md:text-6xl font-bold">
             Welcome to Your Dashboard<br></br>
-            <span className=" text-blue-400  mx-40">Swornim Shrestha</span>
+            <span className=" text-blue-400  md:mx-40">Swornim Shrestha</span>
           </h1>
           <div className="flex flex-row gap-6">
             <Button
