@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "flowbite-react";
 import Task from "../components/Task";
+import { useSelector } from "react-redux";
 const Tasks = () => {
   const [openTaskDialogBox, setOpenTaskDialogBox] = useState(false);
-
+  const { currentUser } = useSelector((state) => state.user);
   const toggleTaskDialogBox = () => {
     setOpenTaskDialogBox((prevState) => !prevState);
   };
@@ -16,7 +17,10 @@ const Tasks = () => {
         <div className=" w-full  flex flex-col gap-9 z-10 md:items-center">
           <h1 className=" text-4xl md:text-6xl font-bold">
             Welcome to Your Dashboard<br></br>
-            <span className=" text-blue-400  md:mx-40">Swornim Shrestha</span>
+            <span className=" text-blue-400  md:mx-40">
+              {" "}
+              {currentUser.fullName}
+            </span>
           </h1>
           <div className="flex flex-row gap-6">
             <Button
@@ -26,7 +30,7 @@ const Tasks = () => {
             >
               Create Task
             </Button>
-            <Link to="/sign-up">
+            <Link to="/tasks-list">
               <Button gradientDuoTone="purpleToBlue" outline>
                 Task List
               </Button>
