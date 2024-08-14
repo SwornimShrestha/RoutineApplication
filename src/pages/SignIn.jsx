@@ -40,9 +40,16 @@ const SignIn = () => {
       if (res.ok) {
         dispatch(signInSuccess(data));
         navigate("/");
+      } else {
+        dispatch(signInFailure(data.message || "Invalid credentials"));
       }
     } catch (error) {
-      dispatch(signInFailure("error while signin"));
+      dispatch(
+        signInFailure(
+          error.response?.data?.message ||
+            "An error occurred. Please try again later."
+        )
+      );
     }
   };
   return (

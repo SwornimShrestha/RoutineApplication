@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Label, TextInput, Alert, Spinner } from "flowbite-react";
-import { Link , useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Otp from "../components/Otp";
 
 const SignUp = () => {
@@ -39,11 +39,6 @@ const SignUp = () => {
         method: "POST",
         body: formData,
       });
-      // const data = await res.json();
-
-      // if (data.success === false) {
-      //   return setErrorMessage(data.message);
-      // }
 
       if (res.ok) {
         console.log(
