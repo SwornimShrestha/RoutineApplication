@@ -4,6 +4,7 @@ import { Navbar, Button, Dropdown, Avatar } from "flowbite-react";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toogleTheme } from "../redux/theme/themeSlice";
+import { signOut } from "../redux/user/userSlice";
 
 const Header = () => {
   const path = useLocation().pathname;
@@ -19,6 +20,9 @@ const Header = () => {
     }
   }, [currentUser]);
 
+  const handleSignOut = () => {
+    dispatch(signOut());
+  };
   const fetchData = async () => {
     try {
       const response = await fetch(
@@ -71,9 +75,6 @@ const Header = () => {
                 <span className="block text-sm font-medium">
                   @{currentUser.username}
                 </span>
-                <span className="block text-sm font-medium truncate">
-                  {currentUser.fullName}
-                </span>
               </Dropdown.Header>
               <Link>
                 <Dropdown.Item className=" text-sm font-medium">
@@ -81,7 +82,10 @@ const Header = () => {
                 </Dropdown.Item>
               </Link>
               <Dropdown.Divider />
-              <Dropdown.Item className=" text-sm font-medium text-red-500">
+              <Dropdown.Item
+                className=" text-sm font-medium text-red-500"
+                onClick={handleSignOut}
+              >
                 Sign out
               </Dropdown.Item>
             </Dropdown>

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 const Otp = ({ email, isOpen, onClose }) => {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
@@ -17,8 +19,8 @@ const Otp = ({ email, isOpen, onClose }) => {
       }
     );
     if (res.ok) {
-      console.log("OTP verified successfully.");
       navigate("/sign-in");
+      toast.success("OTP verified successfully ");
     } else {
       console.error("OTP verification failed.");
     }

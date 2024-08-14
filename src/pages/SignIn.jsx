@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Label, TextInput, Alert, Spinner } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import {
   signInFailure,
@@ -16,7 +17,6 @@ const SignIn = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
@@ -35,10 +35,11 @@ const SignIn = () => {
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         dispatch(signInSuccess(data));
+
+        toast.success("Login Successfull");
         navigate("/");
       } else {
         dispatch(signInFailure(data.message || "Invalid credentials"));
@@ -52,6 +53,7 @@ const SignIn = () => {
       );
     }
   };
+
   return (
     <div className="min-h-screen mt-44 ">
       <div className=" flex p-8 md:p-4 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5 shadow-xl rounded-xl">
