@@ -26,13 +26,10 @@ const Header = () => {
       );
 
       if (response.ok) {
-        // Convert the response to a Blob
         const imageBlob = await response.blob();
 
-        // Create a URL for the Blob to be used as the image source
         const imageUrl = URL.createObjectURL(imageBlob);
 
-        // Set the avatar URL to the generated object URL
         setAvatarUrl(imageUrl);
       } else {
         console.error("Failed to fetch user data");
