@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Navbar, Button, Dropdown, Avatar } from "flowbite-react";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ const Header = () => {
   const path = useLocation().pathname;
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
 
@@ -22,6 +23,7 @@ const Header = () => {
 
   const handleSignOut = () => {
     dispatch(signOut());
+    navigate("/");
   };
   const fetchData = async () => {
     try {

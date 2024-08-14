@@ -112,7 +112,7 @@ const Task = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Modal show={isOpen} size="md" onClose={onClose} popup>
+    <Modal show={isOpen} size="md" onClose={onClose} popup className="bg-black">
       <Modal.Header />
       <Modal.Body>
         <div className="space-y-4">
