@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Navbar, Button, Dropdown, Avatar } from "flowbite-react";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaMoon, FaSun, FaSignOutAlt } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toogleTheme } from "../redux/theme/themeSlice";
 import { signOut } from "../redux/user/userSlice";
 
+import { toast } from "react-toastify";
 const Header = () => {
   const path = useLocation().pathname;
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const Header = () => {
   const handleSignOut = () => {
     dispatch(signOut());
     navigate("/");
+    toast.success("SignOut Successfull");
   };
   const fetchData = async () => {
     try {
@@ -68,7 +70,7 @@ const Header = () => {
           </Button>
           {currentUser ? (
             <Dropdown
-              className="bg-[#f3f7fc] "
+              className="bg-[#f3f7fc] md:ml-[-3rem] "
               arrowIcon={false}
               inline
               label={<Avatar alt="user" img={avatarUrl} rounded />}
@@ -78,6 +80,7 @@ const Header = () => {
                   @{currentUser.username}
                 </span>
               </Dropdown.Header>
+
               <Link>
                 <Dropdown.Item className=" text-sm font-medium">
                   Profile
@@ -85,7 +88,7 @@ const Header = () => {
               </Link>
               <Dropdown.Divider />
               <Dropdown.Item
-                className=" text-sm font-medium text-red-500"
+                className=" text-sm font-medium text-red-500 dark:text-red-500"
                 onClick={handleSignOut}
               >
                 Sign out

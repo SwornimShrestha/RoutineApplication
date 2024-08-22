@@ -16,11 +16,6 @@ const Home = () => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
             accusantium dolorem asperiores laboriosam necessitatibus.s
           </p>
-          <Link to="/sign-up">
-            <Button gradientDuoTone="purpleToBlue" outline>
-              Sign Up
-            </Button>
-          </Link>
         </div>
         {/* {right-side} */}
         <div className="w-full md:w-2/3 md:ml-40">

@@ -2,6 +2,7 @@
 import { Button, Label, Modal, TextInput, Select, Alert } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 const Task = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     title: "",
@@ -89,7 +90,6 @@ const Task = ({ isOpen, onClose }) => {
         body: JSON.stringify(newData),
       });
 
-      console.log(newData);
       if (response.ok) {
         const data = await response.json();
         console.log("Success:", data);
@@ -101,6 +101,7 @@ const Task = ({ isOpen, onClose }) => {
           startTime: "",
           endTime: "",
         });
+        toast.success("Routine Created ");
       } else {
         setError("Failed to create routine. Please try again.");
         console.error("Error:", response.statusText);
@@ -112,7 +113,7 @@ const Task = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Modal show={isOpen} size="md" onClose={onClose} popup className="bg-black">
+    <Modal show={isOpen} size="md" onClose={onClose} popup className="pt-20">
       <Modal.Header />
       <Modal.Body>
         <div className="space-y-4">

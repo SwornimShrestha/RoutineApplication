@@ -5,6 +5,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Tasks from "./pages/Tasks";
 import TaskList from "./components/TaskList";
+import Error from "./pages/Error";
 function App() {
   return (
     <>
@@ -17,6 +18,7 @@ function App() {
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/tasks-list" element={<TaskList />} />
           <Route path="/tasks-list/:id" element={<TaskList />} />
+          <Route path="/*" element={<Error />} />
         </Routes>
       </BrowserRouter>
     </>
