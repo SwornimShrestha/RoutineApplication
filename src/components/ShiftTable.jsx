@@ -11,22 +11,23 @@ export function ShiftTable() {
   const [shiftData, setShiftData] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8080/api/v1/routine/${shift}/${currentUser.id}`
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setShiftData(data);
-        console.log(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/routine/${shift}/${currentUser.id}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
+      const data = await response.json();
+      setShiftData(data);
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+   
     fetchData();
   }, [shift, currentUser.id]);
 
@@ -121,7 +122,7 @@ export function ShiftTable() {
         </Table>
       ) : (
         <div className="text-center py-8 text-gray-500">
-          No tasks available for this shift.
+          
         </div>
       )}
       {openTaskDialogBox && selectedTask && (
