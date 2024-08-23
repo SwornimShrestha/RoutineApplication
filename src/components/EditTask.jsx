@@ -7,7 +7,7 @@ const EditTask = ({ isOpen, onClose, data }) => {
   const [formData, setFormData] = useState({
     title: data.title || "",
     description: data.description || "",
-    shift: data.shift || "MORNING",
+    shift: data.shiftingTime || "",
     startTime: data.startTime || "",
     endTime: data.endTime || "",
   });
@@ -19,7 +19,7 @@ const EditTask = ({ isOpen, onClose, data }) => {
     setFormData({
       title: data.title || "",
       description: data.description || "",
-      shift: data.shift || "MORNING",
+      shift: data.shiftingTime || "",
       startTime: data.startTime || "",
       endTime: data.endTime || "",
     });
@@ -101,15 +101,16 @@ const EditTask = ({ isOpen, onClose, data }) => {
       if (response.ok) {
         const data = await response.json();
         console.log("Success:", data);
-        onClose();
+
         setFormData({
           title: "",
           description: "",
-          shift: "MORNING",
+          shift: "",
           startTime: "",
           endTime: "",
         });
         toast.success("Routine Updated ");
+        onClose();
       } else {
         setError("Failed to create routine. Please try again.");
         console.error("Error:", response.statusText);
