@@ -1,14 +1,16 @@
-"use client";
-
-import { Checkbox, Table } from "flowbite-react";
+import { Button, Checkbox, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import EditTask from "./EditTask";
 
 export function ShiftTable() {
+  const [openTaskDialogBox, setOpenTaskDialogBox] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
   const { id: shift } = useParams();
-  const [shiftData, setShifData] = useState([]);
+  const [shiftData, setShiftData] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,14 +21,49 @@ export function ShiftTable() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setShifData(data);
+        setShiftData(data);
         console.log(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-  }, [shift]);
+  }, [shift, currentUser.id]);
+
+  const handleDelete = async (deleteId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/routine/${deleteId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to delete task");
+      }
+      setShiftData((prevShiftData) =>
+        prevShiftData.filter((task) => task.id !== deleteId)
+      );
+      alert("Task deleted successfully");
+    } catch (error) {
+      console.error("Error deleting task:", error);
+      alert("Error deleting task. Please try again.");
+    }
+  };
+
+  const handleEdit = (task) => {
+    setSelectedTask(task);
+    setOpenTaskDialogBox(true);
+  };
+  const handleTaskUpdated = () => {
+    setOpenTaskDialogBox(false);
+    fetchData();
+  };
 
   return (
     <div className="overflow-x-auto mx-3 md:mx-60 md:my-12">
@@ -64,6 +101,7 @@ export function ShiftTable() {
                   <a
                     href="#"
                     className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                    onClick={() => handleEdit(data)}
                   >
                     Edit
                   </a>
@@ -72,6 +110,7 @@ export function ShiftTable() {
                   <a
                     href="#"
                     className="font-medium text-red-600 hover:underline dark:text-red-500"
+                    onClick={() => handleDelete(data.id)}
                   >
                     Delete
                   </a>
@@ -84,6 +123,13 @@ export function ShiftTable() {
         <div className="text-center py-8 text-gray-500">
           No tasks available for this shift.
         </div>
+      )}
+      {openTaskDialogBox && selectedTask && (
+        <EditTask
+          data={selectedTask}
+          isOpen={openTaskDialogBox}
+          onClose={() => handleTaskUpdated(false)}
+        />
       )}
     </div>
   );

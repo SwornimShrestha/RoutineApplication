@@ -9,6 +9,9 @@ import { toast } from "react-toastify";
 const Otp = ({ email, isOpen, onClose }) => {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
+
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
