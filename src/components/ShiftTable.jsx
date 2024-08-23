@@ -27,6 +27,7 @@ export function ShiftTable() {
     }
   };
 
+
   useEffect(() => {
     fetchData();
   }, [shift, currentUser.id]);
@@ -122,7 +123,7 @@ export function ShiftTable() {
         </Table>
       ) : (
         <div className="text-center py-8 text-gray-500">
-          No tasks available for this shift.
+          
         </div>
       )}
       {openTaskDialogBox && selectedTask && (

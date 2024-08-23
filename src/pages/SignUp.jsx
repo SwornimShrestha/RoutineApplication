@@ -79,10 +79,8 @@ const SignUp = () => {
             </span>
             Routine
           </Link>
-          <p className="text-sm mt-5">
-            This is a demo project. You can sign up with your email and password
-            .
-          </p>
+          
+          <img src="./signup.gif" alt="" className="pt-3"/>
         </div>
         {/* right */}
 

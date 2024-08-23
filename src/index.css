@@ -6,3 +6,49 @@
 body{
       background-color: #ffffff;
 }
+
+.typing-effect {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: inherit;
+    }
+    
+    .typing-effect.line-1 {
+      animation: typing 2s steps(22) 0.5s 1 normal both;
+    }
+    
+    .typing-effect.line-2 {
+      animation: typing 3s steps(22) 2.5s 1 normal both;
+    }
+    
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+    @keyframes scroll {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 15s linear infinite;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+        
+    
+    
+    
+    

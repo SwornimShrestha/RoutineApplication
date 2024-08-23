@@ -56,20 +56,12 @@ const SignIn = () => {
 
   return (
     <div className="min-h-screen mt-44 ">
-      <div className=" flex p-8 md:p-4 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5 shadow-xl rounded-xl">
-        {/* left */}
-        <div className="flex-1">
-          <Link to="/" className="font-bold dark:text-white text-4xl">
-            <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-blue-500 to-blue-200 rounded-lg text-white">
-              Daily's
-            </span>
-            Routine
-          </Link>
-          <p className="text-sm mt-5">
-            This is a demo project. You can sign up with your email and password
-            or with Google.
-          </p>
-        </div>
+       <h3 className="text-headingcolor text-[22px] leading-9 font-bold mb-10 text-center">
+          Hello! <span className="text-primaryColor">Welcome</span> Back🧡
+        </h3>
+        <div className=" flex p-8 md:p-4 max-w-xl mx-auto flex-col md:flex-row md:items-center gap-5 shadow-xl rounded-xl">
+      
+       
         {/* right */}
 
         <div className="flex-1">
