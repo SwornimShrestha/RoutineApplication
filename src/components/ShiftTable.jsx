@@ -26,8 +26,9 @@ export function ShiftTable() {
       console.error("Error fetching data:", error);
     }
   };
+
+
   useEffect(() => {
-   
     fetchData();
   }, [shift, currentUser.id]);
 
@@ -87,12 +88,12 @@ export function ShiftTable() {
             {shiftData.map((data, index) => (
               <Table.Row
                 key={index}
-                className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                className="bg-slate-200/40 dark:border-gray-700 dark:bg-gray-800"
               >
                 <Table.Cell className="p-4">
                   <Checkbox />
                 </Table.Cell>
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-950 dark:text-white">
                   {data.title}
                 </Table.Cell>
                 <Table.Cell>{data.description}</Table.Cell>
