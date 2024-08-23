@@ -2,17 +2,18 @@
 
 import { Checkbox, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
-
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export function ShiftTable() {
   const { id: shift } = useParams();
   const [shiftData, setShifData] = useState([]);
+  const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/v1/routine/${shift}/1`
+          `http://localhost:8080/api/v1/routine/${shift}/${currentUser.id}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

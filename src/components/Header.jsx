@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Navbar, Button, Dropdown, Avatar } from "flowbite-react";
-import { FaMoon, FaSun, FaSignOutAlt } from "react-icons/fa";
+import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toogleTheme } from "../redux/theme/themeSlice";
 import { signOut } from "../redux/user/userSlice";

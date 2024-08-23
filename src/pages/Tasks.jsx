@@ -15,13 +15,14 @@ const Tasks = () => {
       <div className=" px-10 md:px-20 mt-32  relative">
         {/* {left-side} */}
         <div className=" w-full  flex flex-col gap-9 z-10 md:items-center">
-          <h1 className=" text-4xl md:text-6xl font-bold">
-            Welcome to Your Dashboard<br></br>
-            <span className=" text-blue-400  md:mx-40">
-              {" "}
+          <div className="flex flex-col ">
+            <h1 className=" text-4xl md:text-6xl font-bold justify-center items-center">
+              Welcome to Your Dashboard<br></br>
+            </h1>
+            <h1 className="text-4xl md:text-6xl font-bold text-blue-400  text-center ">
               {currentUser.fullName}
-            </span>
-          </h1>
+            </h1>
+          </div>
           <div className="flex flex-row gap-6">
             <Button
               gradientDuoTone="purpleToBlue"

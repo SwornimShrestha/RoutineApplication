@@ -31,7 +31,7 @@ const TaskListNavbar = () => {
   }, [currentUser.id]);
 
   return (
-    <nav className="inline-block">
+    <nav className="inline-block bg-[#f8fafc] dark:bg-[#1f2937] rounded-lg">
       <ul className="flex gap-10 justify-center shadow-lg font-semibold p-3 rounded-lg cursor-pointer">
         {shiftList.map((item, index) => (
           <li key={index}>

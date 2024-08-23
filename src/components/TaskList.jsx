@@ -3,6 +3,8 @@
 import React from "react";
 import TaskListNavbar from "./TaskListNavbar";
 import { ShiftTable } from "./ShiftTable";
+import { Link } from "react-router-dom";
+import { Button } from "flowbite-react";
 
 const TaskList = () => {
   return (
@@ -12,6 +14,11 @@ const TaskList = () => {
       </h1>
       <TaskListNavbar />
       <ShiftTable />
+      <Link to="/tasks">
+        <Button className="mx-auto" gradientDuoTone="purpleToBlue" outline>
+          Create More Task
+        </Button>
+      </Link>
     </div>
   );
 };
