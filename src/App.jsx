@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUp";
 import Tasks from "./pages/Tasks";
 import TaskList from "./components/TaskList";
 import Error from "./pages/Error";
+import Profile from "./pages/Profile";
 function App() {
   return (
     <>
@@ -18,6 +19,8 @@ function App() {
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/tasks-list" element={<TaskList />} />
           <Route path="/tasks-list/:id" element={<TaskList />} />
+          <Route path="/profile" element={<Profile/>} />
+          
           <Route path="/*" element={<Error />} />
         </Routes>
       </BrowserRouter>

@@ -73,16 +73,12 @@ const Header = () => {
             <Dropdown
               arrowIcon={false}
               inline
-              label={<Avatar alt="user" img={avatarUrl} rounded className="border-2 border-gray-300" />}
+              label={<Avatar alt="user" img={avatarUrl} rounded />}
               className="bg-transparent shadow-lg"
             >
               <Dropdown.Header>
                 <div className="flex flex-col items-center">
-                  <Avatar
-                    img={avatarUrl}
-                    rounded
-                    className="w-16 h-16 border-2 border-gray-300 mb-2 transition-transform duration-200 transform hover:scale-110"
-                  />
+                  
                   <span className="block text-lg font-semibold text-gray-900 dark:text-white">
                     @{currentUser.username}
                   </span>
