@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import img from "../assets/heroimg3.png"
 import { useSelector } from "react-redux";
 import EditProfile from "../components/EditProfile";
@@ -9,6 +9,12 @@ const Profile = () => {
 
   const [avatarUrl, setAvatarUrl] = useState("");
   const [openTaskDialogBox, setOpenTaskDialogBox] = useState(false);
+  const inputRef = useRef(null);
+
+  const focusInput = () => {
+    inputRef.current.click();
+  };
+
  
   const fetchData = async () => {
     try {
@@ -58,41 +64,78 @@ const Profile = () => {
     fetchData();
   };
 
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/auth/profile/${currentUser.id}/upload-avatar`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        const updatedProfile = await response.json();
+        setAvatarUrl(URL.createObjectURL(file));
+        console.log("Avatar updated successfully");
+      } else {
+        console.error("Failed to upload avatar");
+      }
+    } catch (error) {
+      console.error("An error occurred while uploading avatar:", error);
+    }
+  };
   return (
-    <div className="flex items-center justify-center h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-white">
-      <div className="bg-gray-800 bg-opacity-80 p-4 rounded-lg shadow-lg w-full max-w-4xl flex flex-col md:flex-row">
+    <div className="flex items-center justify-center h-screen text-white">
+      <div className="shadow-4xl dark:bg-gray-800 bg-opacity-80 p-4 rounded-lg shadow-lg w-full max-w-4xl flex flex-col md:flex-row">
         
 
         <div className="w-full md:w-1/2 flex flex-col justify-center space-y-4">
-          <div className="flex flex-col items-center mb-6">
+          <div className="flex flex-row justify-center gap-7 items-center mb-6">
             {avatarUrl ? (
               <img
                 className="w-24 h-24 rounded-full object-cover border-4 border-indigo-500 shadow-lg"
                 src={avatarUrl}
                 alt="Profile"
               />
+              
             ) : (
-              <div className="w-24 h-24 rounded-full bg-gray-700 flex items-center justify-center border-4 border-indigo-500 shadow-lg">
+              <div className="w-24 h-24 rounded-full  dark:bg-gray-800 flex items-center justify-center border-4 border-indigo-500 shadow-lg">
                 <span className="text-lg">No Image</span>
               </div>
             )}
+            <img
+            onClick={focusInput}
+                className="w-16 h-16  object-cover  "
+                src="https://img.icons8.com/?size=100&id=102714&format=png&color=000000"
+                alt="Profile"
+              />
+               <input ref={inputRef} type="file"  className="hidden" 
+              onChange={handleFileChange} />
+   
            
           </div>
 
           <div className="space-y-3">
-            <div className="bg-gray-700 p-3 rounded-lg shadow-lg">
-              <h3 className="text-lg font-semibold mb-1">Full Name</h3>
-              <p className="text-base">{profileData.fullName}</p>
+            <div className=" dark:bg-gray-800 text-black dark:text-white p-3 rounded-lg shadow-lg">
+              <h3 className="text-lg font-semibold mb-1 font-bold">Full Name</h3>
+              <p className="text-base font-semibold text-gray-500 ">{profileData.fullName}</p>
             </div>
 
-            <div className="bg-gray-700 p-3 rounded-lg shadow-lg">
+            <div className=" dark:bg-gray-800 text-black dark:text-white p-3 rounded-lg shadow-lg">
               <h3 className="text-lg font-semibold mb-1">Username</h3>
-              <p className="text-base">{profileData.username}</p>
+              <p className="text-base font-semibold text-gray-500">{profileData.username}</p>
             </div>
 
-            <div className="bg-gray-700 p-3 rounded-lg shadow-lg">
+            <div className=" dark:bg-gray-800 text-black dark:text-white p-3 rounded-lg shadow-lg">
               <h3 className="text-lg font-semibold mb-1">Email</h3>
-              <p className="text-base">{profileData.email}</p>
+              <p className="text-base font-semibold text-gray-500">{profileData.email}</p>
             </div>
 
           
@@ -112,6 +155,7 @@ const Profile = () => {
             src={img}
             alt="Full"
           />
+          
         </div>
       </div>
       {openTaskDialogBox &&  (
