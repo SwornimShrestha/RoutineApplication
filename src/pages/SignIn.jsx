@@ -55,15 +55,11 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen mt-44 ">
-       <h3 className="text-headingcolor text-[22px] leading-9 font-bold mb-10 text-center">
-          Hello! <span className="text-primaryColor">Welcome</span> Back🧡
-        </h3>
-        <div className=" flex p-8 md:p-4 max-w-xl mx-auto flex-col md:flex-row md:items-center gap-5 shadow-xl rounded-xl">
-      
-       
-        {/* right */}
-
+    <div className="min-h-screen mt-44  ">
+      <h3 className="text-headingcolor text-[22px] leading-9 font-bold mb-10 text-center ">
+        Hello! <span className="text-primaryColor">Welcome</span> Back🧡
+      </h3>
+      <div className=" flex p-8 md:p-4 max-w-xl mx-auto flex-col md:flex-row md:items-center gap-5 shadow-2xl rounded-xl">
         <div className="flex-1">
           <form className="flex flex-col gap-4 " onSubmit={handleSubmit}>
             <div>

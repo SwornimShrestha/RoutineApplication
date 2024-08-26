@@ -73,14 +73,14 @@ const SignUp = () => {
       <div className="flex p-8 md:p-5 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5 shadow-xl rounded-xl">
         {/* left */}
         <div className="flex-1">
-          <Link to="/" className="font-bold dark:text-white text-4xl">
+          <Link to="/" className="font-bold dark:text-white text-3xl">
             <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-blue-500 to-blue-200 rounded-lg text-white">
               Daily's
             </span>
             Routine
           </Link>
-          
-          <img src="./signup.gif" alt="" className="pt-3"/>
+
+          <img src="./signup.gif" alt="" className="pt-4" />
         </div>
         {/* right */}
 
