@@ -30,20 +30,15 @@ const EditProfile = ({ isOpen, onClose, data }) => {
     setError(null);
   };
 
-  const validateForm = () => {
-    if (!formData.fullName) return "Please enter the fullName.";
-    if (!formData.username) return "Please enter the username.";
-    if (!formData.password) return "Please enter the password.";
-    
-    return null;
-  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationError = validateForm();
-    if (validationError) {
-      setError(validationError);
-      return;
+    const passwordPattern = /^(?=.*[@])(?=.*[!]).{5,}$/;
+    if (!passwordPattern.test(formData.password)) {
+      return setError(
+        "Password must contain '@', '!', and be at least 5 characters long."
+      );
     }
     
     try {
@@ -54,7 +49,7 @@ const EditProfile = ({ isOpen, onClose, data }) => {
         
       };
       const response = await fetch(
-        `http://localhost:8080/api/v1/routine/${currentUser.id}`,
+        `http://localhost:8080/api/v1/auth/${currentUser.id}`,
         {
           method: "PUT",
           headers: {
@@ -70,7 +65,8 @@ const EditProfile = ({ isOpen, onClose, data }) => {
 
         setFormData({
           fullName: "",
-          username: ""
+          username: "",
+          password:""
         });
         toast.success("Profile Updated ");
         onClose();
@@ -85,7 +81,7 @@ const EditProfile = ({ isOpen, onClose, data }) => {
   };
 
   return (
-    <Modal show={isOpen} size="md" onClose={onClose} popup className="pt-20">
+    <Modal show={isOpen} size="md" onClose={onClose} popup className="pt-20 pl-[30rem]">
       <Modal.Header />
       <Modal.Body>
         <div className="space-y-4">
@@ -114,6 +110,18 @@ const EditProfile = ({ isOpen, onClose, data }) => {
             />
           </div>
          
+          <div>
+            <div className="mb-2 block">
+              <Label value="password" />
+            </div>
+            <TextInput
+              id="password"
+              placeholder="Enter password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
           <div className="flex flex-row justify-center gap-7">
             <Button color="success" onClick={handleSubmit}>
               Save
